@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:YogiBearX.View"
+             xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             x:Class="YogiBearX.View.MainPage"
+             Title="YogiBear">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="FieldStyle" TargetType="Button">
+                <Setter Property="WidthRequest" Value="32" />
+                <Setter Property="HeightRequest" Value="32" />
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="BorderWidth" Value="0" />
+                <Style.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding Value}" Value="0">
+                        <Setter Property="Image" Value="floor.png" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding Value}" Value="1">
+                        <Setter Property="Image" Value="barrier.png" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding Value}" Value="2">
+                        <Setter Property="Image" Value="basket.png" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding Value}" Value="3">
+                        <Setter Property="Image" Value="player.png" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding Value}" Value="4">
+                        <Setter Property="Image" Value="ranger.png" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Button Text="Új játék" Command="{Binding NewGameCommand}" Grid.Row="0" HorizontalOptions="Start"/>
+            <Button Text="Szünet" Command="{Binding PauseCommand}" Grid.Row="0" HorizontalOptions="End" />
+
+            <controls:FlowListView Grid.Row="1" FlowColumnCount="{Binding ColumnCount}" FlowItemsSource="{Binding Fields}" SeparatorVisibility="None" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#B5E61D" >
+                <!-- a játéktáblát egy sorfolytos listával valósítjuk meg -->
+                <controls:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <!-- a rács elemei gombok lesznek -->
+                        <Button Style="{StaticResource FieldStyle}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </DataTemplate>
+                </controls:FlowListView.FlowColumnTemplate>
+            </controls:FlowListView>
+
+            <Button Grid.Row="2" Text="Fel" HorizontalOptions="Center" Command="{Binding StepCommand}" CommandParameter="1" />
+            <Button Grid.Row="3" Text="Bal" HorizontalOptions="Start" Command="{Binding StepCommand}" CommandParameter="2" />
+            <Button Grid.Row="3" Text="Le" HorizontalOptions="Center" Command="{Binding StepCommand}" CommandParameter="3" />
+            <Button Grid.Row="3" Text="Jobb" HorizontalOptions="End" Command="{Binding StepCommand}" CommandParameter="4" />
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Grid.Row="4">
+                <Label Text="Játékidő: " FontSize="Large" />
+                <Label Text="{Binding GameTime}" FontSize="Large" /> 
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="4">
+                <Label Text="Kosarak: " FontSize="Large" />
+                <Label Text="{Binding Baskets}" FontSize="Large" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+
+<!--Button Text="faszt egyé'!"                              BackgroundColor="#B5E61D"
+                Image="floor.png"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" /-->
